@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Diagnostics;
 
 namespace lab
 {
@@ -14,18 +15,85 @@ namespace lab
         static StreamWriter escritura;
 
         static int volv = 0, area = 0, total = 0;
-        static string resp = "";
+        static string resp = "", cod = "";
         static string inicio = "", detalle = "";
 
         static void Main(string[] args)
         {
+            encabezadous();
             acceso();
+            buscar(inicio);
+            buscart(inicio);
             while (volv != 3)
-            { 
+            {
+                    principaladmin();
+                    if (area == 1)
+                    {
+                        Process play = new Process();
+                        play.StartInfo.FileName = "Inventario.txt";
+                        play.Start();
+                    }
+
+                    else if (area == 2)
+                    {
+                        Process play = new Process();
+                        play.StartInfo.FileName = "Usuarios.txt";
+                        play.Start();
+                    }
+
+                    else if (area == 3)
+                    {
+                        Process play = new Process();
+                        play.StartInfo.FileName = "Facturas.txt";
+                        play.Start();
+
+                    }
              
             
             }
 
+        }
+
+        static void buscar(string codigo)
+        {
+            string lupa = "busqueda";
+            leer = File.OpenText(us);
+            lupa = leer.ReadLine();
+
+            while (lupa != "USUARIOS TRABAJADOR")
+            { 
+                if (codigo == cod)
+                {
+                    principaladmin();
+
+                }
+
+                else
+                {
+                    Console.WriteLine("Código incorrecto");
+                }
+            }
+        }
+
+        static void buscart(string codigo)
+        {
+            string lupa = "busqueda";
+            leer = File.OpenText(us);
+            lupa = leer.ReadLine();
+
+            while (lupa != "USUARIOS ADMINISTRADOR")
+            {
+                if (codigo == cod)
+                {
+                    principaltrab();
+
+                }
+
+                else
+                {
+                    Console.WriteLine("Código incorrecto");
+                }
+            }
         }
 
         static string leer(string l)
@@ -40,10 +108,12 @@ namespace lab
 
         static void encabezadous()
         { 
-        
+            escribir=File.AppendText(us);
+            escribir.WriteLine("USUARIOS\nNombre " +"Edad " +"Día de nacimiento " + "Puesto de trabajo" + "Código de acceso");
+            escribir.Close();
         }
 
-        static void datosdeusuario(string nomb, int edad, int naci, string trab, string cod)
+        static void datosdeusuario(string nomb, int edad, int naci, string trab, cod)
         {
             escribir = File.AppendText(us);
             escribir.WriteLine(nomb + "-" + edad + "-" + naci + "-" + trab + "-" + cod);
@@ -59,6 +129,23 @@ namespace lab
             Console.WriteLine("\n");
 
         }
+
+        static void principaladmin()
+        {
+            Console.WriteLine("Escriba el número según el área a la que desea entrar");
+            Console.WriteLine("1. Inventario\n2. Usuarios\n3. Facturas");
+            area = int.Parse(Console.ReadLine());
+            Console.WriteLine("\n");
+
+        }
+
+        static void principaltrab()
+        {
+            Console.WriteLine("Escriba el número según el área a la desea entrar.");
+            Console.WriteLine("1. Cargar inventario\n2. Facturación");
+            area = int.Parse(Console.ReadLine());
+        }
+
 
         static void areaus()
         {
